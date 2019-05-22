@@ -1,0 +1,336 @@
+---
+title: "No Such Thing as a 4-2-3-1"
+author: "Aditya Kothari"
+date: "May 2019"
+output: html_document
+---
+
+```{r Setup, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+   
+rm(list = ls())
+
+library(data.table)
+library(emdist)
+library(snow)
+library(snowfall)
+library(ggplot2)
+library(scales)
+library(knitr)
+library(clue)
+library(dendextend)
+theme_set(theme_bw(12))
+
+```
+
+```{r ParametersFunctions, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+cPostCodeFolderLocation = '/media/ask/Data/Personal/Projects/Personal/AnalysingFootballData/EMDRelated/'
+cPostDataFolderLocation = '/media/ask/Data/Personal/Projects/Personal/NoSuchThingAs4231'
+
+source(paste0(cPostCodeFolderLocation, '/Common.R'))
+read_chunk(paste0(cPostCodeFolderLocation, '/CommonChunksClusteringFormations.R'))
+
+iChunks = 100
+
+```
+
+
+```{r LoadingData, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+load(paste0(
+   cPostDataFolderLocation,
+   '/Data/FormationMatchingData/ProcessedData.Rdata'
+))
+
+load(paste0(
+   cPostDataFolderLocation,
+   '/Data/FormationMatchingData/ClusteredData.Rdata'
+))
+
+dtDistancMatchFileNames = merge(
+   dtDistancMatchFileNames,
+   dtPasses[, list(SNO1 = SNO[1]), list(matchId1 = as.character(matchId), teamId1 = as.character(teamId))],
+   c('matchId1','teamId1')
+)
+
+dtDistancMatchFileNames = merge(
+   dtDistancMatchFileNames,
+   dtPasses[, list(SNO2 = SNO[1]), list(matchId2 = as.character(matchId), teamId2 = as.character(teamId))],
+   c('matchId2','teamId2')
+)
+
+```
+# {.tabset .tabset-fade .tabset-pills}
+
+## Motivation
+
+Formations and player roles are a very fuzzy concept. We simplify things into 4-2-3-1s and 4-3-3s and right backs and centre forwards but within those simplifications there are many nuances to how different teams and different players function.
+
+In this post, I try to quantify these and find teams who are set up similarly in various matches.
+
+## Methodology
+
+Refer to <a href="https://thecomeonman.github.io/SpatialSimilaritiesBetweenPlayers/">my post on similar players based on their spatial distributions</a>.
+
+## Clustering team-matches
+
+The teams are clustered based on the max distance between players.
+
+```{r Clustering, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+
+```
+Each node at the end of this graph is a particular team playing in a particular match.
+
+```{r ClusteringResults, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 5, results = 'asis'}
+
+
+```
+
+Cluster descriptions:
+
+* Cluster 1 is 3-4-2-1
+
+* Cluster 2 is 3-4-2-1 with a mix of various other 3 at the back formations
+
+* Cluster 3 is 4-3-3
+
+* Cluster 4 to 7 are a mix of various 4 at the back formations with a strong 4-2-3-1 element in all of them.
+
+* Cluster 8 seems to not have an underlying link with the formation.
+
+
+## Cluster Examples {.tabset .tabset-fade .tabset-pills}
+
+A match from each of the clusters is shown below. I've also added some comparisons between clusters which feel slightly similar.
+
+
+
+
+```{r ClusterSetting1, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToDemonstrate = 1
+
+```
+
+### Cluster `r iClusterToDemonstrate`
+
+```{r ClusterExploration1, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+#### Comparing clusters 1 and 2
+
+```{r ClusterComparison12Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToCompare = 2
+cFormationToCompare = '3421'
+
+```
+
+```{r ClusterComparison12, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+
+
+
+
+```{r ClusterSetting2, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToDemonstrate = 2
+
+```
+
+### Cluster `r iClusterToDemonstrate`
+
+```{r ClusterExploration2, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+
+
+
+
+```{r ClusterSetting3, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToDemonstrate = 3
+
+```
+
+### Cluster `r iClusterToDemonstrate`
+
+```{r ClusterExploration3, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+
+
+
+
+
+
+```{r ClusterSetting4, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToDemonstrate = 4
+
+```
+
+### Cluster `r iClusterToDemonstrate`
+
+```{r ClusterExploration4, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+
+#### Comparing clusters 4 and 5
+
+```{r ClusterComparison45Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToCompare = 6
+cFormationToCompare = '4231'
+
+```
+
+```{r ClusterComparison45, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+#### Comparing clusters 4 and 6
+
+```{r ClusterComparison46Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToCompare = 6
+cFormationToCompare = '4231'
+
+```
+
+```{r ClusterComparison46, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+#### Comparing clusters 4 and 7
+
+```{r ClusterComparison47Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToCompare = 7
+cFormationToCompare = '4231'
+
+```
+
+```{r ClusterComparison47, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+
+
+
+
+```{r ClusterSetting5, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToDemonstrate = 5
+
+```
+
+### Cluster `r iClusterToDemonstrate`
+
+```{r ClusterExploration5, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+#### Comparing clusters 5 and 6
+
+```{r ClusterComparison56Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToCompare = 6
+cFormationToCompare = '4231'
+
+```
+
+```{r ClusterComparison56, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+#### Comparing clusters 5 and 7
+
+```{r ClusterComparison57Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToCompare = 7
+cFormationToCompare = '4231'
+
+```
+
+```{r ClusterComparison57, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+
+
+
+
+
+
+```{r ClusterSetting6, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToDemonstrate = 6
+
+```
+
+### Cluster `r iClusterToDemonstrate`
+
+```{r ClusterExploration6, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+#### Comparing clusters 6 and 7
+
+```{r ClusterComparison67Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToCompare = 7
+cFormationToCompare = '4231'
+
+```
+
+```{r ClusterComparison67, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+
+
+
+
+
+```{r ClusterSetting7, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToDemonstrate = 7
+
+```
+
+### Cluster `r iClusterToDemonstrate`
+
+```{r ClusterExploration7, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+
+
+
+```{r ClusterSetting8, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToDemonstrate = 8
+
+```
+### Cluster `r iClusterToDemonstrate`
+
+```{r ClusterExploration8, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+
+
+
+
+
+
+
+## To Do
+
+I plan to add data from La Liga, Bundesliga, Seria A, Ligue 1, and the Championship from 2017/18. A bigger set of matches with more diverse strategies might lead to different, and more general clusters?

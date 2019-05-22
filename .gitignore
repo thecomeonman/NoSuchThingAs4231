@@ -1,0 +1,7 @@
+./Data*
+./Discard*
+Data/*
+Discard/*
+*Rdata*
+*rdata*
+.Rhistory
