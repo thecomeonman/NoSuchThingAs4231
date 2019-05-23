@@ -62,6 +62,8 @@ dtDistancMatchFileNames = merge(
 ```
 # {.tabset .tabset-fade .tabset-pills}
 
+This is a very very WIP post. It has only EPL comparisons right now and I'm adding data from other leagues to get more generic results.
+
 ## Motivation
 
 Formations and player roles are a very fuzzy concept. We simplify things into 4-2-3-1s and 4-3-3s and right backs and centre forwards but within those simplifications there are many nuances to how different teams and different players function.
@@ -80,6 +82,7 @@ The teams are clustered based on the max distance between players.
 
 
 ```
+
 Each node at the end of this graph is a particular team playing in a particular match.
 
 ```{r ClusteringResults, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 5, results = 'asis'}
@@ -102,9 +105,9 @@ Cluster descriptions:
 
 ## Cluster Examples {.tabset .tabset-fade .tabset-pills}
 
-A match from each of the clusters is shown below. I've also added some comparisons between clusters which feel slightly similar.
+I've picked a match from each of the clusters, and overlaid that match with data from all the player pairings with that match in that cluster. That gives a rough idea of how the teams played in that cluster.
 
-
+I've also added some comparisons between clusters which feel slightly similar.
 
 
 ```{r ClusterSetting1, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
@@ -113,12 +116,16 @@ iClusterToDemonstrate = 1
 
 ```
 
-### Cluster `r iClusterToDemonstrate`
+### Cluster `r iClusterToDemonstrate`  {.tabset .tabset-fade .tabset-pills}
+
+#### Cluster Example
 
 ```{r ClusterExploration1, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
 ```
 
-#### Comparing clusters 1 and 2
+#### Comparisons {.tabset .tabset-fade .tabset-pills}
+
+##### Clusters 1 and 2
 
 ```{r ClusterComparison12Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
 
@@ -128,6 +135,19 @@ cFormationToCompare = '3421'
 ```
 
 ```{r ClusterComparison12, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
+```
+
+
+##### Clusters 1 and 3
+
+```{r ClusterComparison13Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
+
+iClusterToCompare = 3
+cFormationToCompare = '3421'
+
+```
+
+```{r ClusterComparison13, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
 ```
 
 
@@ -141,187 +161,13 @@ iClusterToDemonstrate = 2
 
 ```
 
-### Cluster `r iClusterToDemonstrate`
+### Cluster `r iClusterToDemonstrate`  {.tabset .tabset-fade .tabset-pills}
+
+#### Cluster Example
 
 ```{r ClusterExploration2, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
 ```
 
-
-
-
-
-
-```{r ClusterSetting3, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
-
-iClusterToDemonstrate = 3
-
-```
-
-### Cluster `r iClusterToDemonstrate`
-
-```{r ClusterExploration3, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
-```
-
-
-
-
-
-
-
-
-```{r ClusterSetting4, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
-
-iClusterToDemonstrate = 4
-
-```
-
-### Cluster `r iClusterToDemonstrate`
-
-```{r ClusterExploration4, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
-```
-
-
-
-#### Comparing clusters 4 and 5
-
-```{r ClusterComparison45Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
-
-iClusterToCompare = 6
-cFormationToCompare = '4231'
-
-```
-
-```{r ClusterComparison45, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
-```
-
-
-#### Comparing clusters 4 and 6
-
-```{r ClusterComparison46Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
-
-iClusterToCompare = 6
-cFormationToCompare = '4231'
-
-```
-
-```{r ClusterComparison46, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
-```
-
-
-#### Comparing clusters 4 and 7
-
-```{r ClusterComparison47Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
-
-iClusterToCompare = 7
-cFormationToCompare = '4231'
-
-```
-
-```{r ClusterComparison47, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
-```
-
-
-
-
-
-
-```{r ClusterSetting5, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
-
-iClusterToDemonstrate = 5
-
-```
-
-### Cluster `r iClusterToDemonstrate`
-
-```{r ClusterExploration5, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
-```
-
-
-#### Comparing clusters 5 and 6
-
-```{r ClusterComparison56Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
-
-iClusterToCompare = 6
-cFormationToCompare = '4231'
-
-```
-
-```{r ClusterComparison56, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
-```
-
-
-#### Comparing clusters 5 and 7
-
-```{r ClusterComparison57Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
-
-iClusterToCompare = 7
-cFormationToCompare = '4231'
-
-```
-
-```{r ClusterComparison57, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
-```
-
-
-
-
-
-
-
-
-```{r ClusterSetting6, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
-
-iClusterToDemonstrate = 6
-
-```
-
-### Cluster `r iClusterToDemonstrate`
-
-```{r ClusterExploration6, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
-```
-
-#### Comparing clusters 6 and 7
-
-```{r ClusterComparison67Setting, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
-
-iClusterToCompare = 7
-cFormationToCompare = '4231'
-
-```
-
-```{r ClusterComparison67, ref.label = 'ClusterComparisonTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
-```
-
-
-
-
-
-
-
-```{r ClusterSetting7, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
-
-iClusterToDemonstrate = 7
-
-```
-
-### Cluster `r iClusterToDemonstrate`
-
-```{r ClusterExploration7, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
-```
-
-
-
-
-
-```{r ClusterSetting8, cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 8, results = 'asis'}
-
-iClusterToDemonstrate = 8
-
-```
-### Cluster `r iClusterToDemonstrate`
-
-```{r ClusterExploration8, ref.label = 'ClusterExplorationTemplate', cache=FALSE, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 15, fig.height = 15, results = 'asis'}
-```
 
 
 
